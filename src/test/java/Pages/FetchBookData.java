@@ -10,8 +10,6 @@ import io.restassured.response.Response;
 import io.restassured.response.ResponseBody;
 import io.restassured.specification.RequestSpecification;
 import org.openqa.selenium.WebDriver;
-
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 

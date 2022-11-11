@@ -13,8 +13,6 @@ public class HomePage {
     WebDriverWait wait;
 
     String HomePageCards = "//h5[contains(text(),'%s')]";
-//    @FindBy(xpath = "//div[contains(@class,'playgound-header')]")
-//    WebElement verifyBookStorePage;
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
@@ -24,8 +22,5 @@ public class HomePage {
     public void navigateToBookStoreApplication() {
         WebElement bookStoreApplication = driver.findElement(By.xpath(String.format(HomePageCards, HomePageEnums.BookStoreApplicationCard_Text.getResourcesName())));
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", bookStoreApplication);
-//        wait.until(ExpectedConditions.visibilityOf(verifyBookStorePage));
-//        String bookStorePageVerifyText = verifyBookStorePage.getText();
-//        Assert.assertEquals(bookStorePageVerifyText, "Book Store");
     }
 }
