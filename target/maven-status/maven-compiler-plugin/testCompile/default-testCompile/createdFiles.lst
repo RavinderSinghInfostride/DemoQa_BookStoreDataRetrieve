@@ -1,0 +1,9 @@
+Pages\BooksPojo.class
+Pages\PageFactory.class
+Report\Listener.class
+Test\ToFetchBooksData.class
+Report\ExtentReport.class
+Pages\BaseClass.class
+Pages\FetchBookData.class
+Pages\HomePage.class
+Enums\HomePageEnums.class

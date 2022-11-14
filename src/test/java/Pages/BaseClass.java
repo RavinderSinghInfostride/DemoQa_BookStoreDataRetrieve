@@ -7,7 +7,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.BeforeClass;
 
 public class BaseClass {
-    WebDriver driver;
+    public WebDriver driver;
     protected PageFactory pageFactory;
 
     @BeforeClass
