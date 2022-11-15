@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
 public class BaseClass {
@@ -21,5 +22,11 @@ public class BaseClass {
         String homePageUrl = driver.getCurrentUrl();
         Assert.assertEquals(homePageUrl, "https://demoqa.com/");
         pageFactory = new PageFactory(driver);
+    }
+
+    @AfterClass
+    public void browserCloses()
+    {
+        driver.quit();
     }
 }
