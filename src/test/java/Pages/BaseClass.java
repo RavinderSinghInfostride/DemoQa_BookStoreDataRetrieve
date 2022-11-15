@@ -4,6 +4,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 
 public class BaseClass {
@@ -17,6 +18,8 @@ public class BaseClass {
         driver = new ChromeDriver(chromeOptions);
         driver.manage().window().maximize();
         driver.navigate().to("https://demoqa.com/");
+        String homePageUrl = driver.getCurrentUrl();
+        Assert.assertEquals(homePageUrl, "https://demoqa.com/");
         pageFactory = new PageFactory(driver);
     }
 }

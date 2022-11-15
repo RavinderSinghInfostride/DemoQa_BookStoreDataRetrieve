@@ -16,17 +16,18 @@ import java.util.List;
 
 public class FetchBookData {
     WebDriver driver;
-    By bookTitle = By.xpath("//a[contains(text(),'Git Pocket Guide')]");
-    By bookAuthor = By.xpath("//div[contains(text(),'Richard E. Silverman')]");
-    By bookPublisher = By.xpath("(//div[contains(text(),\"O'Reilly Media\")])[1]");
+    By firstBookTitle = By.xpath("//a[contains(text(),'Git Pocket Guide')]");
+    By firstBookAuthor = By.xpath("//div[contains(text(),'Richard E. Silverman')]");
+    By firstBookPublisher = By.xpath("(//div[contains(text(),\"O'Reilly Media\")])[1]");
 
     public FetchBookData(WebDriver driver) {
         this.driver = driver;
     }
 
     public void BookData() {
+        RestAssured.baseURI = "https://demoqa.com/";
         RequestSpecification request = RestAssured.given();
-        Response endpoint = request.get("https://demoqa.com/BookStore/v1/Books");
+        Response endpoint = request.get("BookStore/v1/Books");
         ResponseBody body = endpoint.getBody();
         String responseBody = body.asString();
         JsonElement fileElement = JsonParser.parseString(responseBody);
@@ -38,20 +39,13 @@ public class FetchBookData {
             BooksPojo obj = new BooksPojo(booksJsonObject.get("isbn").toString(), booksJsonObject.get("title").toString(), booksJsonObject.get("subTitle").toString(), booksJsonObject.get("author").toString(), booksJsonObject.get("publish_date").toString(), booksJsonObject.get("publisher").toString(), booksJsonObject.get("pages").getAsInt(), booksJsonObject.get("description").toString(), booksJsonObject.get("website").toString());
             booksData.add(obj);
         }
-        String expectedFirstBookTitle = booksData.get(0).getTitle();
-        String expectedFirstBookAuthor = booksData.get(0).getAuthor();
-        String expectedFirstBookPublisher = booksData.get(0).getPublisher();
+        String expectedFirstBookTitle = booksData.get(0).getTitle().replace("\"", "");
+        Assert.assertEquals(driver.findElement(firstBookTitle).getText(), expectedFirstBookTitle);
 
-        expectedFirstBookTitle = expectedFirstBookTitle.replace("\"", "");
-        expectedFirstBookAuthor = expectedFirstBookAuthor.replace("\"", "");
-        expectedFirstBookPublisher = expectedFirstBookPublisher.replace("\"", "");
+        String expectedFirstBookAuthor = booksData.get(0).getAuthor().replace("\"", "");
+        Assert.assertEquals(driver.findElement(firstBookAuthor).getText(), expectedFirstBookAuthor);
 
-        String fistBookTitleUi = driver.findElement(bookTitle).getText();
-        String firstBookAuthorUi = driver.findElement(bookAuthor).getText();
-        String firstBookPublisherUi = driver.findElement(bookPublisher).getText();
-
-        Assert.assertEquals(fistBookTitleUi, expectedFirstBookTitle);
-        Assert.assertEquals(firstBookAuthorUi, expectedFirstBookAuthor);
-        Assert.assertEquals(firstBookPublisherUi, expectedFirstBookPublisher);
+        String expectedFirstBookPublisher = booksData.get(0).getPublisher().replace("\"", "");
+        Assert.assertEquals(driver.findElement(firstBookPublisher).getText(), expectedFirstBookPublisher);
     }
 }
